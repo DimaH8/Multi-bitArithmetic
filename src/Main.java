@@ -2,7 +2,10 @@
 public class Main {
 
 	public static void main(String[] args) {
-		System.out.println("Hello people!");
+		BigNumber numb1 = new BigNumber();
+		String initNumber = "0123456789ABCDEF";
+		numb1.ReadNumber(initNumber);
+		numb1.PrintNumber();
 	}
 
 }
