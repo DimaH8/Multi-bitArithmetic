@@ -1,7 +1,6 @@
 
 public class BigNumber {
-	// Чому я вибрав ромір 64 комірки?
-	int[] array = new int[64]; 
+	int[] array = new int[64];  // One cell contains 32 bits => 32*64 = 2048 bit
 	
 	void ReadNumber(String initNumber) {
 		int amountSymbols = initNumber.length();
@@ -20,23 +19,28 @@ public class BigNumber {
 		{
 			int end = amountSymbols;
 			int start = end - 8;
-			String stroka = initNumber.substring(start, end);
-			amountSymbols =- 9;
-			String data = new StringBuilder(stroka).reverse().toString();
-			array[i] = Integer.parseUnsignedInt(data, 16);
+			String subStroka = initNumber.substring(start, end);
+			amountSymbols = amountSymbols - 8;
+			String reverseSubStroka = new StringBuilder(subStroka).reverse().toString();
+			array[i] = Integer.parseUnsignedInt(reverseSubStroka, 16);
 		}
 	}
 	
 	void PrintNumber() {
-		for (int i = 0; i < array.length ; i++)
+		
+		String stroka = null;
+		
+		for (int i = array.length - 1; i >= 0 ; i--)
 		{
-			System.out.print(Integer.toHexString(array[i]));
+			String substring = Integer.toHexString(array[i]);
+			String reverseSubString = new StringBuilder(substring).reverse().toString();
+			
+			if (i != 63) { stroka = stroka + reverseSubString; }
+			else { stroka = reverseSubString; }	
 		}
 		
+			System.out.print(stroka);	
 	}
-	
-	
-	// public int number = Integer.parseInt(initNumber, 2);
 	
 }
 
