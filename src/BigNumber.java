@@ -2,6 +2,10 @@
 public class BigNumber {
 	int[] array = new int[64];  // One cell contains 32 bits => 32*64 = 2048 bit
 	
+	public BigNumber(String value) {
+			this.ReadNumber(value);
+	}
+
 	void ReadNumber(String initNumber) {
 		int amountSymbols = initNumber.length();
 		
