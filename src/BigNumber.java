@@ -47,29 +47,6 @@ public class BigNumber {
 		return stroka;
 	}
 	
-	/*long SumaNumbers() {
-		long carry = 0;
-		for (int i = 0; i < 64; i++) {
-			long temp = array[i] + secondNumber[i] + carry;
-			sumaNumbers[i] = temp & ((int)Math. pow(2, 32) - 1);
-			carry = (int) (temp >> 32);
-		}
-		return carry;
-	}
-	
-	long Subtraction() {
-		long borrow = 0;
-		for (int i = 0; i < 64; i++) {
-			long temp = array[i] + secondNumber[i] + borrow;
-			if (temp >= 0) { subNumbers[i] = temp; borrow = 0; }
-			else {
-				subNumbers[i] = (int)Math. pow(2, 32) + temp; 
-				borrow = 1;
-			}
-		}
-		return borrow;
-	}
-	*/
 	BigNumber Add(BigNumber number) {
 		// this [BigNumber] -- перший доданок
 		// number [BigNumber] -- другий доданок
@@ -84,6 +61,28 @@ public class BigNumber {
 
 		return result;
 	}
+	
+	BigNumber Subtraction(BigNumber number) {
+		// this [BigNumber] -- перший доданок
+		// number [BigNumber] -- другий доданок
+		// result [BigNumber] -- повертаємо результат додавання
+		BigNumber result = new BigNumber();
+		long borrow = 0; 
+		for (int i = 0; i < array.length; i++) {
+			long temp = this.array[i] - number.array[i] - borrow;
+			if (temp >= 0) {
+				result.array[i] = temp;
+				borrow = 0;
+			}
+			else {
+			result.array[i] = temp + (1L << 32);
+			borrow = 1;
+			}
+		}
+
+		return result;
+	}
+
 	
 	int Compare()
 	{
