@@ -1,6 +1,7 @@
 
 public class BigNumber {
 	long[] array = new long[64];  // One cell contains 32 bits => 32*64 = 2048 bit
+	int a;
 		
 	public BigNumber(String value) {
 		ReadNumber(value);
@@ -62,7 +63,7 @@ public class BigNumber {
 		return result;
 	}
 	
-	BigNumber Subtraction(BigNumber number) {
+	BigNumber Sub(BigNumber number) {
 		// this [BigNumber] -- перший доданок
 		// number [BigNumber] -- другий доданок
 		// result [BigNumber] -- повертаємо результат додавання
@@ -83,12 +84,20 @@ public class BigNumber {
 		return result;
 	}
 
-	
-	int Compare()
-	{
-		
-		return 0;
+	int Cmp(BigNumber numberB) {
+
+		int i = array.length - 1;
+		while (i != -1 && this.array[i] == numberB.array[i]) {
+			i = i - 1;
+		}
+		if (i == -1) { return 0; }
+		else { 
+			if( this.array[i] > numberB.array[i] ) { return 1; }
+			else { return -1; }
+		}
+
 	}
+	
 
 	
 }
