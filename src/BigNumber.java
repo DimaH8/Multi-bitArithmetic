@@ -98,7 +98,95 @@ public class BigNumber {
 
 	}
 	
+	BigNumber LongMulOneDigit( long b ) {
+		// this [BigNumber] -- перший доданок
+		// number [BigNumber] -- другий доданок
+		// result [BigNumber] -- повертаємо результат додавання
+		BigNumber result = new BigNumber();
+		long carry = 0; 
+		for (int i = 0; i < array.length / 2; i++) {
+			long temp = this.array[i]*b + carry;
+			result.array[i] = temp & ( (1L << 32) - 1);
+			System.out.println("This is komirka:\r\n" + result.array[i]);
+			carry = (temp >> 32);
+			System.out.println("This is bit perenos:\r\n" + carry);
+		}
+		result.array[array.length / 2] = carry;
+		return result;
+ 
+	}
+	
+	private void LongShiftDigitsToHigh_UpTo32(int count) { 
+		long carry = 0;
 
+		if (count > 32 || count < 0) {
+			throw new IllegalArgumentException("Error of count32: " + count);                                                  
+	    }
+		
+		for (int j = 0; j < array.length; j++) {
+			
+			long ltemp = this.array[j] << count;
+			ltemp = ltemp + carry;
+			carry = (ltemp >> 32);
+			this.array[j] = ltemp & ( (1L << 32) - 1);
+		}
+	}
+	
+	void LongShiftDigitsToHigh(int count) { 
+		 if (count == 0) {return;}
+		 if (count < 0) {
+			throw new IllegalArgumentException("Error of count32: " + count);
+		 }
+		 
+		 while (count > 32) {
+			 LongShiftDigitsToHigh_UpTo32(32);
+		    count = count - 32; 
+		 }
+		 // count < 32 
+		 LongShiftDigitsToHigh_UpTo32(count);
+	}
+	
+	BigNumber LongMul( BigNumber number ) {
+		// this [BigNumber] -- перший доданок
+		// number [BigNumber] -- другий доданок
+		// result [BigNumber] -- повертаємо результат додавання
+		BigNumber result = new BigNumber();
+		BigNumber temp = new BigNumber();
+		for (int i = 0; i < array.length; i++) {
+			 temp = LongMulOneDigit(number.array[i]);
+			 temp.LongShiftDigitsToHigh(i);
+			 
+			 result = result.Add(temp); 
+			 }
+		return result;
+	}
+	
+	/*BigNumber SquareMul (BigNumber number) {
+		BigNumber result = new BigNumber();
+		BigNumber numb11 = new BigNumber();
+		BigNumber numb12 = new BigNumber();
+		BigNumber numb21 = new BigNumber();
+		BigNumber numb22 = new BigNumber();
+		BigNumber first = new BigNumber();
+		BigNumber second = new BigNumber();
+		BigNumber third = new BigNumber();
+		
+		if (this.length >  )
+		
+		for (int i = 0; i < array.length/2; i++) {
+			numb11.array[i] = this.array[i];
+			numb21.array[i] = number.array[i];
+		}
+		
+		for (int i = array.length/2; i < array.length; i++) {
+			numb12.array[i] = this.array[i];
+			numb22.array[i] = number.array[i];
+		}
+		first
+		
+		return result;
+	} */
+	
 	
 }
 
