@@ -2,8 +2,8 @@
 public class Main {
 
 	public static void main(String[] args) {
-		BigNumber numb1 = new BigNumber("111111111F");
-		BigNumber numb2 = new BigNumber("fffffffaf");
+		BigNumber numb1 = new BigNumber("FEDCBA98F");
+		BigNumber numb2 = new BigNumber("AFC56EB2A");
 		System.out.println("This is first number:\r\n" + numb1.GetString());
 		System.out.println("This is second number:\r\n" + numb2.GetString());
 		

@@ -41,8 +41,10 @@ public class BigNumber {
 		{
 			int cell = (int) array[i];
 			String substring = Integer.toHexString(cell);
-			//String reverseSubString = new StringBuilder(substring).reverse().toString();	
-			//stroka = stroka + reverseSubString;
+			while (substring.length() %8 != 0 ) 
+			{ 
+				substring = 0 + substring;
+			}	
 			stroka = stroka + substring;
 		}
 		return stroka;
@@ -107,9 +109,9 @@ public class BigNumber {
 		for (int i = 0; i < array.length / 2; i++) {
 			long temp = this.array[i]*b + carry;
 			result.array[i] = temp & ( (1L << 32) - 1);
-			System.out.println("This is komirka:\r\n" + result.array[i]);
+			//System.out.println("This is komirka:\r\n" + result.array[i]);
 			carry = (temp >> 32);
-			System.out.println("This is bit perenos:\r\n" + carry);
+			//System.out.println("This is bit perenos:\r\n" + carry);
 		}
 		result.array[array.length / 2] = carry;
 		return result;
@@ -151,15 +153,32 @@ public class BigNumber {
 		// number [BigNumber] -- другий доданок
 		// result [BigNumber] -- повертаємо результат додавання
 		BigNumber result = new BigNumber();
-		BigNumber temp = new BigNumber();
 		for (int i = 0; i < array.length; i++) {
-			 temp = LongMulOneDigit(number.array[i]);
-			 temp.LongShiftDigitsToHigh(i);
-			 
-			 result = result.Add(temp); 
+			 BigNumber temp = LongMulOneDigit(number.array[i]);
+			 System.out.println(this.GetString() + "  This: " + Long.toHexString(number.array[i]));
+		     System.out.println(temp.GetString() + "  Temp1:");
+		     
+			 temp.LongShiftDigitsToHigh(i*32);
+		     System.out.println(temp.GetString() + "  ZTemp1:");
+		     
+			 BigNumber temp2 = result.Add(temp); 
+		     System.out.println(temp2.GetString() + "  Temp2:");
+		     
+		     System.out.println(result.GetString() + "  Result:");
+			 result = temp2;
+		     System.out.println(result.GetString() + "  NewResult:");
+		     int a = 0;
 			 }
 		return result;
 	}
+	
+	void Check() {
+		for (int i = 0; i < array.length ;i++) {
+			long check = array[i] >> 32;
+			if (check != 0) { throw new IllegalArgumentException("check != 0"); } 
+		}
+	}
+	
 	
 	/*BigNumber SquareMul (BigNumber number) {
 		BigNumber result = new BigNumber();
