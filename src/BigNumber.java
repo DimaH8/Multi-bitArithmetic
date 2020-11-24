@@ -27,8 +27,6 @@ public class BigNumber {
 			int start = end - 8;
 			String subStroka = initNumber.substring(start, end);
 			amountSymbols = amountSymbols - 8;
-			/*String reverseSubStroka = new StringBuilder(subStroka).reverse().toString();
-			array[i] = Long.parseUnsignedLong(reverseSubStroka, 16); */
 			array[i] = Long.parseUnsignedLong(subStroka, 16);
 		}
 	}
@@ -59,7 +57,7 @@ public class BigNumber {
 		for (int i = 0; i < array.length; i++) {
 			long temp = this.array[i] + number.array[i] + carry;
 			result.array[i] = temp & ( (1L << 32) - 1);
-			carry = (temp >> 32);
+			carry = (temp >>> 32);
 		}
 
 		return result;
@@ -109,9 +107,7 @@ public class BigNumber {
 		for (int i = 0; i < array.length / 2; i++) {
 			long temp = this.array[i]*b + carry;
 			result.array[i] = temp & ( (1L << 32) - 1);
-			//System.out.println("This is komirka:\r\n" + result.array[i]);
-			carry = (temp >> 32);
-			//System.out.println("This is bit perenos:\r\n" + carry);
+			carry = (temp >>> 32);
 		}
 		result.array[array.length / 2] = carry;
 		return result;
@@ -129,7 +125,7 @@ public class BigNumber {
 			
 			long ltemp = this.array[j] << count;
 			ltemp = ltemp + carry;
-			carry = (ltemp >> 32);
+			carry = (ltemp >>> 32);
 			this.array[j] = ltemp & ( (1L << 32) - 1);
 		}
 	}
@@ -155,19 +151,9 @@ public class BigNumber {
 		BigNumber result = new BigNumber();
 		for (int i = 0; i < array.length; i++) {
 			 BigNumber temp = LongMulOneDigit(number.array[i]);
-			 System.out.println(this.GetString() + "  This: " + Long.toHexString(number.array[i]));
-		     System.out.println(temp.GetString() + "  Temp1:");
-		     
 			 temp.LongShiftDigitsToHigh(i*32);
-		     System.out.println(temp.GetString() + "  ZTemp1:");
-		     
-			 BigNumber temp2 = result.Add(temp); 
-		     System.out.println(temp2.GetString() + "  Temp2:");
-		     
-		     System.out.println(result.GetString() + "  Result:");
+			 BigNumber temp2 = result.Add(temp);
 			 result = temp2;
-		     System.out.println(result.GetString() + "  NewResult:");
-		     int a = 0;
 			 }
 		return result;
 	}
@@ -180,31 +166,7 @@ public class BigNumber {
 	}
 	
 	
-	/*BigNumber SquareMul (BigNumber number) {
-		BigNumber result = new BigNumber();
-		BigNumber numb11 = new BigNumber();
-		BigNumber numb12 = new BigNumber();
-		BigNumber numb21 = new BigNumber();
-		BigNumber numb22 = new BigNumber();
-		BigNumber first = new BigNumber();
-		BigNumber second = new BigNumber();
-		BigNumber third = new BigNumber();
-		
-		if (this.length >  )
-		
-		for (int i = 0; i < array.length/2; i++) {
-			numb11.array[i] = this.array[i];
-			numb21.array[i] = number.array[i];
-		}
-		
-		for (int i = array.length/2; i < array.length; i++) {
-			numb12.array[i] = this.array[i];
-			numb22.array[i] = number.array[i];
-		}
-		first
-		
-		return result;
-	} */
+	 
 	
 	
 }
