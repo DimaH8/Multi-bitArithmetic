@@ -1,7 +1,7 @@
 
 public class BigNumber {
 	long[] array = new long[64];  // One cell contains 32 bits => 32*64 = 2048 bit
-	int a;
+	//int a;
 		
 	public BigNumber(String value) {
 		ReadNumber(value);
@@ -158,15 +158,51 @@ public class BigNumber {
 		return result;
 	}
 	
-	void Check() {
-		for (int i = 0; i < array.length ;i++) {
-			long check = array[i] >> 32;
-			if (check != 0) { throw new IllegalArgumentException("check != 0"); } 
+	 BigNumber SquareMul (BigNumber number) {
+			 
+		BigNumber result = new BigNumber();
+		BigNumber numb11 = new BigNumber();
+		BigNumber numb12 = new BigNumber();
+		BigNumber numb21 = new BigNumber();
+		BigNumber numb22 = new BigNumber();
+		
+		for (int i = 0; i < array.length/2; i++) {
+			numb11.array[i] = this.array[i];
+			numb21.array[i] = number.array[i];
 		}
-	}
-	
-	
-	 
+		
+		for (int i = array.length/2; i < array.length; i++) {
+			numb12.array[i] = this.array[i];
+			numb22.array[i] = number.array[i];
+		}
+		BigNumber first =  numb11.LongMul(numb12);
+		first.LongShiftDigitsToHigh(64);
+		
+		BigNumber third = numb11.LongMul(numb12);
+		BigNumber second = first.Add(third);
+		second.LongShiftDigitsToHigh(32);
+		
+		BigNumber ttemp = numb21.Sub(numb11);
+		BigNumber ttemp2 = numb12.Sub(numb22);
+		BigNumber mttemp = ttemp.LongMul(ttemp2);
+		BigNumber newthird = mttemp.Add(third);
+		
+		result = first.Add(second);
+		result = result.Add(newthird);
+		return result;
+		
+		/* BigNumber temp1 = numb11.Add(numb12);
+		BigNumber temp2 = numb21.Add(numb22);
+		BigNumber temp3 = temp1.LongMul(temp2);
+		BigNumber temp4 = numb11.LongMul(numb22);
+		BigNumber temp5 = temp3.Sub(first);
+		BigNumber second = temp5.Sub(temp4);
+
+
+		second.LongShiftDigitsToHigh(32);
+		result = first.Add(second);
+		result = result.Add(third); */
+	} 
 	
 	
 }
