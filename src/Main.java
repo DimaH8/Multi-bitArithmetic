@@ -2,8 +2,8 @@
 public class Main {
 
 	public static void main(String[] args) {
-		BigNumber numb1 = new BigNumber("AFC56EB2A");
-		BigNumber numb2 = new BigNumber("AFC56EB2A");
+		BigNumber numb1 = new BigNumber("2");
+		BigNumber numb2 = new BigNumber("3");
 		System.out.println("This is first number:\r\n" + numb1.GetString());
 		System.out.println("This is second number:\r\n" + numb2.GetString());
 		
@@ -19,7 +19,7 @@ public class Main {
 		BigNumber numb5 = numb1.LongMul(numb2);
 		System.out.println("This is MulMol:\r\n" + numb5.GetString());
 		
-		BigNumber numb6 = numb1.LongMul(numb2);
+		BigNumber numb6 = numb1.SquareMul();
 		System.out.println("This is SquareMul:\r\n" + numb6.GetString());
 	}
 	

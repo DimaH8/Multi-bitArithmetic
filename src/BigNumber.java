@@ -1,7 +1,6 @@
 
 public class BigNumber {
 	long[] array = new long[64];  // One cell contains 32 bits => 32*64 = 2048 bit
-	//int a;
 		
 	public BigNumber(String value) {
 		ReadNumber(value);
@@ -158,53 +157,45 @@ public class BigNumber {
 		return result;
 	}
 	
-	 BigNumber SquareMul (BigNumber number) {
-			 
+	BigNumber SquareMul() {
 		BigNumber result = new BigNumber();
-		BigNumber numb11 = new BigNumber();
-		BigNumber numb12 = new BigNumber();
-		BigNumber numb21 = new BigNumber();
-		BigNumber numb22 = new BigNumber();
+		BigNumber half0 = new BigNumber();
+		BigNumber half1 = new BigNumber();
 		
 		for (int i = 0; i < array.length/2; i++) {
-			numb11.array[i] = this.array[i];
-			numb21.array[i] = number.array[i];
+			half0.array[i] = this.array[i];
 		}
 		
 		for (int i = array.length/2; i < array.length; i++) {
-			numb12.array[i] = this.array[i];
-			numb22.array[i] = number.array[i];
+			half1.array[i] = this.array[i];
 		}
-		BigNumber first =  numb11.LongMul(numb12);
+		BigNumber first =  half1.LongMul(half1);
+		BigNumber temp = first;
 		first.LongShiftDigitsToHigh(64);
 		
-		BigNumber third = numb11.LongMul(numb12);
-		BigNumber second = first.Add(third);
+		BigNumber second = half0.Add(half1);
+		second = second.LongMul(second);
+		BigNumber third = half0.LongMul(half0);
+		BigNumber temp3 = second.Sub(temp);
+		second = temp3.Sub(third);
 		second.LongShiftDigitsToHigh(32);
 		
-		BigNumber ttemp = numb21.Sub(numb11);
-		BigNumber ttemp2 = numb12.Sub(numb22);
-		BigNumber mttemp = ttemp.LongMul(ttemp2);
-		BigNumber newthird = mttemp.Add(third);
-		
 		result = first.Add(second);
-		result = result.Add(newthird);
-		return result;
+		result = result.Add(third);
 		
-		/* BigNumber temp1 = numb11.Add(numb12);
-		BigNumber temp2 = numb21.Add(numb22);
-		BigNumber temp3 = temp1.LongMul(temp2);
-		BigNumber temp4 = numb11.LongMul(numb22);
-		BigNumber temp5 = temp3.Sub(first);
-		BigNumber second = temp5.Sub(temp4);
-
-
-		second.LongShiftDigitsToHigh(32);
-		result = first.Add(second);
-		result = result.Add(third); */
+		return result; 
 	} 
 	
-	
+	BigNumber LongPower(BigNumber number) {
+		BigNumber result = new BigNumber();
+		result.ReadNumber("1");
+		for (int i = 0; i < array.length; i++) {
+			if (number.array[i] == 1) { result = result.LongMul(this); }
+			this.SquareMul();
+			// щось тут не так..
+		}
+		return result;
+	}	
 }
 
 	
