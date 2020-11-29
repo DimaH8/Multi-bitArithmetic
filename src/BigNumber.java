@@ -10,7 +10,7 @@ public class BigNumber {
 	void ReadNumber(String initNumber) {
 		int amountSymbols = initNumber.length();
 		
-		System.out.println("It is init length: " + amountSymbols);
+		//System.out.println("It is init length: " + amountSymbols);
 		
 		while (amountSymbols %8 != 0 ) 
 		{ 
@@ -18,7 +18,7 @@ public class BigNumber {
 			amountSymbols = initNumber.length();
 		}
 		
-		System.out.println("It is length of massive: " + amountSymbols);
+		//System.out.println("It is length of massive: " + amountSymbols);
 		
 		for (int i = 0; i < array.length && amountSymbols > 0; i ++) 
 		{
@@ -186,18 +186,70 @@ public class BigNumber {
 		return result; 
 	} 
 	
+	final int  BitLength() {
+		for (int i = array.length - 1; i >=  0; i--) {
+			if (array[i] != 0) {
+				for (int shift = 31; shift >= 0; shift--) {
+					long temp = array[i] >>> shift;
+			        if (temp == 1L) {
+			        	int pos = shift;
+			        	return 32*i + pos;
+			        }
+							
+				}
+					
+			}
+		}
+		throw new IllegalArgumentException("Value of BigNumber is zero!");
+	}
+	
+	int GetBit(int pos) {
+		int cell = pos / 32;
+		int shift = pos % 32;
+		return (int) array[cell] >>> shift;
+	}
+	
+	void SetBit(int pos) {
+		//not implemented!
+		
+	}
+	
 	BigNumber LongPower(BigNumber number) {
 		BigNumber result = new BigNumber();
 		result.ReadNumber("1");
-		for (int i = 0; i < array.length; i++) {
-			if (number.array[i] == 1) { result = result.LongMul(this); }
-			this.SquareMul();
-			// щось тут не так..
+		for (int i = number.BitLength(); i >= 0 ; i--) {
+			
+			if (number.GetBit(i) == 1)
+			{ 
+				result = result.LongMul(this);
+			}
+			if (i != 0) {
+				result = result.SquareMul();
+			}
+			
 		}
 		return result;
 	}	
 }
-
+/*
+ 4^2
+ number = 2
+ this = 4
+ 
+ i = 2
+ getbit = 1
+ result = this
+ result = this*this
+ 
+ i = 1
+ getbit = 0
+ result = this^4
+ 
+ i = 0 
+ getbit = 0 
+ result = result
+ return result
+ */
 	
 		
 	
