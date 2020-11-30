@@ -210,8 +210,9 @@ public class BigNumber {
 	}
 	
 	void SetBit(int pos) {
-		//not implemented!
-		
+		int cell = pos / 32;
+		int aim = pos % 32;
+		array[cell] = array[cell] | (1L << (aim ));	
 	}
 	
 	BigNumber LongPower(BigNumber number) {

@@ -3,7 +3,7 @@ public class Main {
 
 	public static void main(String[] args) {
 		BigNumber numb1 = new BigNumber("4ABBBBFFF3456712456bbbbccccaa1ffff");
-		BigNumber numb2 = new BigNumber("0");
+		BigNumber numb2 = new BigNumber("8");
 		System.out.println("This is first number:\r\n" + numb1.GetString());
 		System.out.println("This is second number:\r\n" + numb2.GetString());
 		
@@ -26,6 +26,8 @@ public class Main {
 		System.out.println("This is LongPower:\r\n" + numb7.GetString());
 		 
 		System.out.println("Bit: " + numb2.BitLength());
+		numb2.SetBit(23);
+		System.out.println("SetBit: " + numb2.GetString());
 	}
 	
 }
