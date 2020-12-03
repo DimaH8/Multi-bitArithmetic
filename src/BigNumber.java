@@ -1,3 +1,4 @@
+import org.javatuples.Pair;
 
 public class BigNumber {
 	long[] array = new long[64];  // One cell contains 32 bits => 32*64 = 2048 bit
@@ -230,27 +231,29 @@ public class BigNumber {
 			
 		}
 		return result;
-	}	
+	}
+	
+	BigNumber LongDivMod( BigNumber number) {
+		BigNumber chastka = new BigNumber(); // Q
+		BigNumber ostacha = new BigNumber(); // R
+		int k = number.BitLength();
+		ostacha = this; 
+		while(ostacha.Cmp(number) == 1) {
+			int t = ostacha.BitLength();
+			BigNumber C = number;  // C
+			C.LongShiftDigitsToHigh(t-k); 
+			if (ostacha.Cmp(C) == -1) {
+				t = t - 1;
+				C.LongShiftDigitsToHigh(t-k);
+			}
+			ostacha = ostacha.Sub(C);
+			chastka.SetBit(t-k); 
+		}
+		Pair<BigNumber, BigNumber> pair = Pair.with(chastka, ostacha);
+		System.out.println(pair);
+		return ostacha;
+	}
 }
-/*
- 4^2
- number = 2
- this = 4
- 
- i = 2
- getbit = 1
- result = this
- result = this*this
- 
- i = 1
- getbit = 0
- result = this^4
- 
- i = 0 
- getbit = 0 
- result = result
- return result
- */
 	
 		
 	
