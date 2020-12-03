@@ -1,3 +1,4 @@
+import org.javatuples.Pair;
 
 public class Main {
 
@@ -25,8 +26,11 @@ public class Main {
 		BigNumber numb7 = numb1.LongPower(numb2);
 		System.out.println("This is LongPower:\r\n" + numb7.GetString());
 		*/ 
-		BigNumber numb8 = numb1.LongDivMod(numb2); 
-		System.out.println("This is LongDivMod:\r\n" + numb8.GetString());
+		Pair<BigNumber, BigNumber> pair = numb1.LongDivMod(numb2); 
+		BigNumber Q = pair.getValue0();
+		BigNumber P = pair.getValue1();
+		System.out.println("Q:\r\n" + Q.GetString());
+		System.out.println("P:\r\n" + P.GetString());
 	}
 	
 }

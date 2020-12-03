@@ -7,6 +7,12 @@ public class BigNumber {
 		ReadNumber(value);
 	}
 	public BigNumber() {}
+	
+	public BigNumber(BigNumber number) {
+		for (int i = 0; i < array.length; i++) {
+			array[i] = number.array[i];
+		}		
+	}
 
 	void ReadNumber(String initNumber) {
 		int amountSymbols = initNumber.length();
@@ -233,25 +239,26 @@ public class BigNumber {
 		return result;
 	}
 	
-	BigNumber LongDivMod( BigNumber number) {
+		Pair<BigNumber, BigNumber> LongDivMod( BigNumber number) {
 		BigNumber chastka = new BigNumber(); // Q
 		BigNumber ostacha = new BigNumber(); // R
 		int k = number.BitLength();
 		ostacha = this; 
-		while(ostacha.Cmp(number) == 1) {
+		while(ostacha.Cmp(number) >= 1) {
 			int t = ostacha.BitLength();
-			BigNumber C = number;  // C
+			BigNumber C = new BigNumber(number);  // C
 			C.LongShiftDigitsToHigh(t-k); 
 			if (ostacha.Cmp(C) == -1) {
 				t = t - 1;
-				C.LongShiftDigitsToHigh(t-k);
+				BigNumber temp = new BigNumber(number);
+				temp.LongShiftDigitsToHigh(t-k);
+				C = temp;
 			}
 			ostacha = ostacha.Sub(C);
 			chastka.SetBit(t-k); 
 		}
 		Pair<BigNumber, BigNumber> pair = Pair.with(chastka, ostacha);
-		System.out.println(pair);
-		return ostacha;
+		return pair;
 	}
 }
 	
