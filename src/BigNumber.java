@@ -105,9 +105,6 @@ public class BigNumber {
 	}
 	
 	BigNumber LongMulOneDigit( long b ) {
-		// this [BigNumber] -- перший доданок
-		// number [BigNumber] -- другий доданок
-		// result [BigNumber] -- повертаємо результат додавання
 		BigNumber result = new BigNumber();
 		long carry = 0; 
 		for (int i = 0; i < array.length / 2; i++) {
@@ -151,9 +148,6 @@ public class BigNumber {
 	}
 	
 	BigNumber LongMul( BigNumber number ) {
-		// this [BigNumber] -- перший доданок
-		// number [BigNumber] -- другий доданок
-		// result [BigNumber] -- повертаємо результат додавання
 		BigNumber result = new BigNumber();
 		for (int i = 0; i < array.length; i++) {
 			 BigNumber temp = LongMulOneDigit(number.array[i]);
@@ -244,7 +238,7 @@ public class BigNumber {
 		BigNumber ostacha = new BigNumber(); // R
 		int k = number.BitLength();
 		ostacha = this; 
-		while(ostacha.Cmp(number) >= 1) {
+		while(ostacha.Cmp(number) == 1 || ostacha.Cmp(number) == 0) {
 			int t = ostacha.BitLength();
 			BigNumber C = new BigNumber(number);  // C
 			C.LongShiftDigitsToHigh(t-k); 
@@ -252,7 +246,7 @@ public class BigNumber {
 				t = t - 1;
 				BigNumber temp = new BigNumber(number);
 				temp.LongShiftDigitsToHigh(t-k);
-				C = temp;
+				C = new BigNumber(temp);
 			}
 			ostacha = ostacha.Sub(C);
 			chastka.SetBit(t-k); 
