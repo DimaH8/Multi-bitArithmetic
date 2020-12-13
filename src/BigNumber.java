@@ -82,11 +82,11 @@ public class BigNumber {
 				borrow = 0;
 			}
 			else {
-			result.array[i] = temp + (1L << 32);
-			borrow = 1;
+				result.array[i] = temp + (1L << 32);
+				borrow = 1;
 			}
 		}
-
+		if (borrow == 1) { throw new IllegalArgumentException("Error: The second number is greater than the first"); }
 		return result;
 	}
 
@@ -167,8 +167,9 @@ public class BigNumber {
 			half0.array[i] = this.array[i];
 		}
 		
-		for (int i = array.length/2; i < array.length; i++) {
-			half1.array[i] = this.array[i];
+		for (int j = 0,i = array.length/2; i < array.length; i++, j++) {
+			
+			half1.array[j] = this.array[i];
 		}
 		BigNumber first =  half1.LongMul(half1);
 		BigNumber temp = first;
@@ -177,8 +178,12 @@ public class BigNumber {
 		BigNumber second = half0.Add(half1);
 		second = second.LongMul(second);
 		BigNumber third = half0.LongMul(half0);
-		BigNumber temp3 = second.Sub(temp);
-		second = temp3.Sub(third);
+		//BigNumber temp3 = second.Sub(temp);
+		//second = temp3.Sub(third);
+		//second.LongShiftDigitsToHigh(32);
+		BigNumber temp3 = temp.Add(third);
+		if (second.Cmp(temp3) != -1) { second = second.Sub(temp3); }
+		else { second = temp3.Sub(second); }
 		second.LongShiftDigitsToHigh(32);
 		
 		result = first.Add(second);
@@ -207,18 +212,18 @@ public class BigNumber {
 	int GetBit(int pos) {
 		int cell = pos / 32;
 		int shift = pos % 32;
-		return (int) array[cell] >>> shift;
+		return (int) ((array[cell] >>> shift) & 1L);
 	}
 	
 	void SetBit(int pos) {
 		int cell = pos / 32;
 		int aim = pos % 32;
-		array[cell] = array[cell] | (1L << (aim ));	
+		array[cell] = array[cell] | (1L << (aim));	
 	}
 	
 	BigNumber LongPower(BigNumber number) {
 		BigNumber result = new BigNumber();
-		result.ReadNumber("1");
+		result.SetBit(0);
 		for (int i = number.BitLength(); i >= 0 ; i--) {
 			
 			if (number.GetBit(i) == 1)
@@ -254,7 +259,61 @@ public class BigNumber {
 		Pair<BigNumber, BigNumber> pair = Pair.with(chastka, ostacha);
 		return pair;
 	}
+		  //  LABA 2
+		
+	private void ShiftRight_UpTo32(int count) { 
+		long carryOld = 0;
+		long carryNew = 0;
+
+		if (count > 32 || count < 0) {
+			throw new IllegalArgumentException("Error of count32: " + count);                                                  
+	    }
+		
+		for (int j = array.length-1; j >= 0; j--) {
+			
+			carryNew = this.array[j] & ((1L << (count + 1)) - 1);
+			long ltemp = this.array[j] >>> count;
+			this.array[j] = ltemp + (carryOld << (32 - count));
+			carryOld = carryNew;
+		}
+	}
+	
+	void ShiftRight(int count) { 
+		 if (count == 0) {return;}
+		 if (count < 0) {
+			throw new IllegalArgumentException("Error of count32: " + count);
+		 }
+		 
+		 while (count > 32) {
+			 ShiftRight_UpTo32(32);
+		    count = count - 32; 
+		 }
+		 // count < 32 
+		 ShiftRight_UpTo32(count);
+	}
+		
+	BigNumber BarrettReduction(BigNumber mod, BigNumber mu)	{
+		// k = 2046/2 = 1023 
+		// 2k = 2046
+		// B^2k חאילא÷ 2047 ב³ע
+		BigNumber result = new BigNumber();
+		BigNumber q = new BigNumber(this);
+		int k = (BitLength()-1)/2;
+		q.ShiftRight(k-1);
+		q = q.LongMul(mu);
+		q.ShiftRight(k+1);
+		BigNumber temp = q.LongMul(mod);
+		result = this.Sub(temp);
+		while (result.Cmp(mod) != -1) {
+			result = result.Sub(mod);
+		}
+		return result;
+	}
+		
 }
+
+
+                                         
 	
 		
 	
