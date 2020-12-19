@@ -291,22 +291,61 @@ public class BigNumber {
 		 // count < 32 
 		 ShiftRight_UpTo32(count);
 	}
+	
+    BigNumber BarretPreCompute() {
+    	// this = mod
+        int k_minus_1 = BitLength();
+        int k = k_minus_1 + 1;
+        if (k > 1023) {
+        	// оскільки реалізація лабораторної роботи може вміщати не більше ніж 2048 біт, а запис B^2k 
+        	// займає 2k+1 біт, тому максимальне значення k може бути 1023 біти.
+        	throw new IllegalArgumentException("Error: lenght of k > 1023. k = " + k); 
+        }
+        int two_k = 2 * k;
+        BigNumber B = new BigNumber();
+        B.SetBit(two_k);
+        Pair<BigNumber, BigNumber> pair = B.LongDivMod(this);
+        BigNumber mu = pair.getValue0();
+        return mu;
+    }
 		
 	BigNumber BarrettReduction(BigNumber mod, BigNumber mu)	{
-		// k = 2046/2 = 1023 
-		// 2k = 2046
-		// B^2k займає 2047 біт
+		// this = x
+		if ((this.BitLength() + 1) > 2*(mod.BitLength() +1)) {
+			System.out.println("Lenght x: " + (this.BitLength() + 1));
+			System.out.println("Lenght mod: " + (mod.BitLength() + 1));
+			throw new IllegalArgumentException("Error: By definition: |n| = k, |x| = 2k");
+		}
 		BigNumber result = new BigNumber();
 		BigNumber q = new BigNumber(this);
-		int k = (BitLength()-1)/2;
+		int k = (mod.BitLength() + 1);
+		if (k > 1023) { 
+			// оскільки реалізація лабораторної роботи може вміщати не більше ніж 2048 біт, а запис B^2k 
+			// займає 2k+1 біт, тому максимальне значення k може бути 1023 біти.
+			throw new IllegalArgumentException("Error: lenght of k > 1023. k = " + k); 
+		}
 		q.ShiftRight(k-1);
 		q = q.LongMul(mu);
 		q.ShiftRight(k+1);
 		BigNumber temp = q.LongMul(mod);
-		result = this.Sub(temp);
+	    BigNumber r1 = new BigNumber(this);		
+		r1.ShiftRight(k + 1);
+		BigNumber r2 = temp;
+		r2.ShiftRight(k + 1);
+		if (r1.Cmp(r2) == -1) { 
+			r1.SetBit(k+1);
+		} 
+		result = r1.Sub(r2); 
+		/*BigNumber preRes = this;
+		if (this.Cmp(temp) == -1) { preRes = this.Add(mod); }
+		result = preRes.Sub(temp);
+		*/
+		int count = 0;
 		while (result.Cmp(mod) != -1) {
 			result = result.Sub(mod);
+			count++;
 		}
+		System.out.println("BarretReduction: loop count " + count);
 		return result;
 	}
 		
