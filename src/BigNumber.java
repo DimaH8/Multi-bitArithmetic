@@ -348,7 +348,47 @@ public class BigNumber {
 		System.out.println("BarretReduction: loop count " + count);
 		return result;
 	}
-		
+	BigNumber Abs (BigNumber num) {
+		if ( this.Cmp(num) == 1 ) { return this.Sub(num); }
+		else { return num.Sub(this); }
+	}
+	
+	BigNumber Min (BigNumber num) {
+		if ( this.Cmp(num) == 1) {return num;}
+		else {return this;}
+	}
+	
+	BigNumber Gsd (BigNumber number) {
+		BigNumber result = new BigNumber();
+		BigNumber num1 = new BigNumber(this);
+		BigNumber num2 = new BigNumber(number);
+		result.SetBit(0);
+		while (((num1.GetBit(0) %2) == 0) && (num2.GetBit(0) %2) == 0) {
+			num1.ShiftRight(1);
+			num2.ShiftRight(1);
+			result.ShiftRight(1);
+		}
+		while ((num1.GetBit(0) %2) == 0) {
+			num1.ShiftRight(1);
+		}
+		BigNumber nul = new BigNumber();
+		while (num2.Cmp(nul) != 0) {
+			while ( (num2.GetBit(0) %2) == 0) {
+				num2.ShiftRight(1);	
+			}
+			num1 = num1.Min(num2);
+			num2 = num2.Abs(num2);
+		}
+		result = result.LongMul(num1);
+		return result;
+	}
+	BigNumber Lcm (BigNumber number) {
+		BigNumber temp0 = this.LongMul(number);
+		BigNumber temp1 = this.Gsd(number);
+		Pair<BigNumber, BigNumber> pair = temp0.LongDivMod(temp1);
+        BigNumber result = pair.getValue0();		
+		return result;
+	}
 }
 
 

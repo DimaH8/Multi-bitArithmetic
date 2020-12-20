@@ -36,7 +36,7 @@ public class Main {
 		
 		BigNumber numb4 = numb1.Sub(numb2);
 		System.out.println("This is subtraction:\r\n" + numb4.GetString());
-	*/
+	
 	
 		BigNumber mu = numb2.BarretPreCompute();
 		System.out.println("mu:\r\n" + mu.GetString());
@@ -45,6 +45,12 @@ public class Main {
 		
 		//int k = numb1.BitLength();
 		//System.out.println("BitLength:" + k);
+		 */
+		BigNumber numb8 = numb1.Gsd(numb2);
+		System.out.println("Gsd:\r\n" + numb8.GetString());
+		numb8 = numb1.Lcm(numb2);
+		System.out.println("Lcm:\r\n" + numb8.GetString());
+
 	}
 	
 	
