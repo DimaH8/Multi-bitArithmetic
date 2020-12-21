@@ -47,10 +47,13 @@ public class Main {
 		
 		BigNumber numb9 = numb1.Gsd(numb2);
 		System.out.println(numb9 + " = Gsd");
-		numb9 = numb1.Lcm(numb2);
-		System.out.println(numb9 + " = Lcm");
+		//numb9 = numb1.Lcm(numb2);
+		//System.out.println(numb9 + " = Lcm");
  
-		BigNumber numb10 = numb1.LongModPowerBarrett(numb1, numb2) ;
+		BigNumber A = new BigNumber("a34fd32a");
+		BigNumber B = new BigNumber("40");
+		BigNumber N = new BigNumber("7543678fda");
+		BigNumber numb10 = A.LongModPowerBarrett(B, N) ;
 		System.out.println(numb10 + " = PowerModBarrett");
 	}
 	

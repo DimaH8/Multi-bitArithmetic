@@ -429,19 +429,20 @@ public class BigNumber {
 		return result;
 	}
 	
-	BigNumber LongModPowerBarrett (BigNumber number, BigNumber mod) {
+	BigNumber LongModPowerBarrett (BigNumber B, BigNumber mod) {
 		BigNumber result = new BigNumber();
-		BigNumber A = new BigNumber(this);
 		result.SetBit(0);
-		BigNumber mu = result.BarretPreCompute();
-		for (int i = 0; i <= number.BitLength() ; i++) {
+		BigNumber A = new BigNumber(this);
+		BigNumber mu = mod.BarretPreCompute();
+		int b_bitlen = B.BitLength();
+		for (int i = 0; i <= b_bitlen; i++) {
 			
-			if (number.GetBit(i) == 1)
+			if (B.GetBit(i) == 1)
 			{ 
 				result = result.LongMul(A);
 				result = result.BarrettReduction(mod, mu) ;
 			}
-			A = result.LongMul(A);
+			A = A.LongMul(A);
 			A = A.BarrettReduction(mod, mu);
 		}
 		return result;
