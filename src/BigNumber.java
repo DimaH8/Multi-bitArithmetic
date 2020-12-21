@@ -38,7 +38,7 @@ public class BigNumber {
 	}
 	
 	String GetString() {
-		
+		SelfCheck();
 		String stroka = "";
 		
 		for (int i = array.length - 1; i >= 0 ; i--)
@@ -54,10 +54,22 @@ public class BigNumber {
 		return stroka;
 	}
 	
+	public String toString() {
+		return GetString();
+	}
+	
+	private void SelfCheck() {
+		for (int i = 0; i < array.length; i++) {
+			if (array[i] > ((1L <<32) - 1)) {
+				throw new IllegalArgumentException("Error: Self check failed");
+			}
+		}
+	}
+	
 	BigNumber Add(BigNumber number) {
-		// this [BigNumber] -- ïåðøèé äîäàíîê
-		// number [BigNumber] -- äðóãèé äîäàíîê
-		// result [BigNumber] -- ïîâåðòàºìî ðåçóëüòàò äîäàâàííÿ
+		// this [BigNumber] -- Ã¯Ã¥Ã°Ã¸Ã¨Ã© Ã¤Ã®Ã¤Ã Ã­Ã®Ãª
+		// number [BigNumber] -- Ã¤Ã°Ã³Ã£Ã¨Ã© Ã¤Ã®Ã¤Ã Ã­Ã®Ãª
+		// result [BigNumber] -- Ã¯Ã®Ã¢Ã¥Ã°Ã²Ã ÂºÃ¬Ã® Ã°Ã¥Ã§Ã³Ã«Ã¼Ã²Ã Ã² Ã¤Ã®Ã¤Ã Ã¢Ã Ã­Ã­Ã¿
 		BigNumber result = new BigNumber();
 		long carry = 0; 
 		for (int i = 0; i < array.length; i++) {
@@ -70,9 +82,9 @@ public class BigNumber {
 	}
 	
 	BigNumber Sub(BigNumber number) {
-		// this [BigNumber] -- ïåðøèé äîäàíîê
-		// number [BigNumber] -- äðóãèé äîäàíîê
-		// result [BigNumber] -- ïîâåðòàºìî ðåçóëüòàò äîäàâàííÿ
+		// this [BigNumber] -- Ã¯Ã¥Ã°Ã¸Ã¨Ã© Ã¤Ã®Ã¤Ã Ã­Ã®Ãª
+		// number [BigNumber] -- Ã¤Ã°Ã³Ã£Ã¨Ã© Ã¤Ã®Ã¤Ã Ã­Ã®Ãª
+		// result [BigNumber] -- Ã¯Ã®Ã¢Ã¥Ã°Ã²Ã ÂºÃ¬Ã® Ã°Ã¥Ã§Ã³Ã«Ã¼Ã²Ã Ã² Ã¤Ã®Ã¤Ã Ã¢Ã Ã­Ã­Ã¿
 		BigNumber result = new BigNumber();
 		long borrow = 0; 
 		for (int i = 0; i < array.length; i++) {
@@ -271,7 +283,7 @@ public class BigNumber {
 		
 		for (int j = array.length-1; j >= 0; j--) {
 			
-			carryNew = this.array[j] & ((1L << (count + 1)) - 1);
+			carryNew = this.array[j] & ((1L << (count)) - 1);
 			long ltemp = this.array[j] >>> count;
 			this.array[j] = ltemp + (carryOld << (32 - count));
 			carryOld = carryNew;
@@ -292,13 +304,25 @@ public class BigNumber {
 		 ShiftRight_UpTo32(count);
 	}
 	
+	BigNumber ModPow2(int pow) {
+		int cell = pow / 32;
+		int aim = pow % 32;
+		
+		BigNumber result = new BigNumber();
+		for (int i = 0; i < cell; i++) {
+			result.array[i] = array[i];
+		}
+		result.array[cell] = array[cell] & ((1L << aim) - 1L);
+		return result;
+	}
+	
     BigNumber BarretPreCompute() {
     	// this = mod
         int k_minus_1 = BitLength();
         int k = k_minus_1 + 1;
         if (k > 1023) {
-        	// îñê³ëüêè ðåàë³çàö³ÿ ëàáîðàòîðíî¿ ðîáîòè ìîæå âì³ùàòè íå á³ëüøå í³æ 2048 á³ò, à çàïèñ B^2k 
-        	// çàéìàº 2k+1 á³ò, òîìó ìàêñèìàëüíå çíà÷åííÿ k ìîæå áóòè 1023 á³òè.
+        	// Ã®Ã±ÃªÂ³Ã«Ã¼ÃªÃ¨ Ã°Ã¥Ã Ã«Â³Ã§Ã Ã¶Â³Ã¿ Ã«Ã Ã¡Ã®Ã°Ã Ã²Ã®Ã°Ã­Ã®Â¿ Ã°Ã®Ã¡Ã®Ã²Ã¨ Ã¬Ã®Ã¦Ã¥ Ã¢Ã¬Â³Ã¹Ã Ã²Ã¨ Ã­Ã¥ Ã¡Â³Ã«Ã¼Ã¸Ã¥ Ã­Â³Ã¦ 2048 Ã¡Â³Ã², Ã  Ã§Ã Ã¯Ã¨Ã± B^2k 
+        	// Ã§Ã Ã©Ã¬Ã Âº 2k+1 Ã¡Â³Ã², Ã²Ã®Ã¬Ã³ Ã¬Ã ÃªÃ±Ã¨Ã¬Ã Ã«Ã¼Ã­Ã¥ Ã§Ã­Ã Ã·Ã¥Ã­Ã­Ã¿ k Ã¬Ã®Ã¦Ã¥ Ã¡Ã³Ã²Ã¨ 1023 Ã¡Â³Ã²Ã¨.
         	throw new IllegalArgumentException("Error: lenght of k > 1023. k = " + k); 
         }
         int two_k = 2 * k;
@@ -319,33 +343,37 @@ public class BigNumber {
 		BigNumber result = new BigNumber();
 		BigNumber q = new BigNumber(this);
 		int k = (mod.BitLength() + 1);
+		//System.out.println(k + " = k");
 		if (k > 1023) { 
-			// îñê³ëüêè ðåàë³çàö³ÿ ëàáîðàòîðíî¿ ðîáîòè ìîæå âì³ùàòè íå á³ëüøå í³æ 2048 á³ò, à çàïèñ B^2k 
-			// çàéìàº 2k+1 á³ò, òîìó ìàêñèìàëüíå çíà÷åííÿ k ìîæå áóòè 1023 á³òè.
+			// Ã®Ã±ÃªÂ³Ã«Ã¼ÃªÃ¨ Ã°Ã¥Ã Ã«Â³Ã§Ã Ã¶Â³Ã¿ Ã«Ã Ã¡Ã®Ã°Ã Ã²Ã®Ã°Ã­Ã®Â¿ Ã°Ã®Ã¡Ã®Ã²Ã¨ Ã¬Ã®Ã¦Ã¥ Ã¢Ã¬Â³Ã¹Ã Ã²Ã¨ Ã­Ã¥ Ã¡Â³Ã«Ã¼Ã¸Ã¥ Ã­Â³Ã¦ 2048 Ã¡Â³Ã², Ã  Ã§Ã Ã¯Ã¨Ã± B^2k 
+			// Ã§Ã Ã©Ã¬Ã Âº 2k+1 Ã¡Â³Ã², Ã²Ã®Ã¬Ã³ Ã¬Ã ÃªÃ±Ã¨Ã¬Ã Ã«Ã¼Ã­Ã¥ Ã§Ã­Ã Ã·Ã¥Ã­Ã­Ã¿ k Ã¬Ã®Ã¦Ã¥ Ã¡Ã³Ã²Ã¨ 1023 Ã¡Â³Ã²Ã¨.
 			throw new IllegalArgumentException("Error: lenght of k > 1023. k = " + k); 
 		}
 		q.ShiftRight(k-1);
+		//System.out.println(q + " = q1");
 		q = q.LongMul(mu);
+		//System.out.println(mu + " = mu");
+		//System.out.println(q + " = q2");
 		q.ShiftRight(k+1);
+		//System.out.println(q + " = q3");
+		BigNumber r1 = this.ModPow2(k+1);
+		//System.out.println(r1 + " = r1");
 		BigNumber temp = q.LongMul(mod);
-	    BigNumber r1 = new BigNumber(this);		
-		r1.ShiftRight(k + 1);
-		BigNumber r2 = temp;
-		r2.ShiftRight(k + 1);
+		//System.out.println(temp + " = r2 ... temp");
+		BigNumber r2 = temp.ModPow2(k+1);
+		//System.out.println(r2 + " = r2");
 		if (r1.Cmp(r2) == -1) { 
+			//System.out.println("BarretReduction: set k+1 = " + (k+1));
 			r1.SetBit(k+1);
 		} 
 		result = r1.Sub(r2); 
-		/*BigNumber preRes = this;
-		if (this.Cmp(temp) == -1) { preRes = this.Add(mod); }
-		result = preRes.Sub(temp);
-		*/
+		//System.out.println(result + " = result");
 		int count = 0;
 		while (result.Cmp(mod) != -1) {
 			result = result.Sub(mod);
 			count++;
 		}
-		System.out.println("BarretReduction: loop count " + count);
+		//System.out.println("BarretReduction: loop count " + count);
 		return result;
 	}
 	BigNumber Abs (BigNumber num) {

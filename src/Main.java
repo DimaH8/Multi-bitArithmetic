@@ -1,15 +1,13 @@
 import org.javatuples.Pair;
 
-//import org.javatuples.Pair;
-
 public class Main {
 
-	public static void main(String[] args) {
-		BigNumber numb1 = new BigNumber("A46534BFF");
-		BigNumber numb2 = new BigNumber("87");
+	public static void main(String[] args) {	
+		BigNumber numb1 = new BigNumber("2534fdca32fdca569fa3453243532324322534534534fdfdd62476845385acbdf890129238");
+		BigNumber numb2 = new BigNumber("57df23438932abddfdfdf31433adfe12312234");
 			
-		System.out.println("This is first number:\r\n" + numb1.GetString());
-		System.out.println("This is second number:\r\n" + numb2.GetString());
+		System.out.println(numb1 + " = x");
+		System.out.println(numb2 + " = mod");
 		/*
 		BigNumber numb3 = numb1.Add(numb2);
 		System.out.println("This is suma:\r\n" + numb3.GetString());
@@ -38,11 +36,11 @@ public class Main {
 		BigNumber numb4 = numb1.Sub(numb2);
 		System.out.println("This is subtraction:\r\n" + numb4.GetString());
 	
-	
+		
 		BigNumber mu = numb2.BarretPreCompute();
-		System.out.println("mu:\r\n" + mu.GetString());
+		System.out.println(mu + " = mu");
 		BigNumber numb8 = numb1.BarrettReduction(numb2, mu);
-		System.out.println("Barret:\r\n" + numb8.GetString()); 
+		System.out.println(numb8 + " = Barret"); 
 		
 		//int k = numb1.BitLength();
 		//System.out.println("BitLength:" + k);
