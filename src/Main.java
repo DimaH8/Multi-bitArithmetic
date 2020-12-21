@@ -6,8 +6,8 @@ public class Main {
 		BigNumber numb1 = new BigNumber("2534fdca32fdca569fa3453243532324322534534534fdfdd62476845385acbdf890129238");
 		BigNumber numb2 = new BigNumber("57df23438932abddfdfdf31433adfe12312234");
 			
-		System.out.println(numb1 + " = x");
-		System.out.println(numb2 + " = mod");
+		System.out.println(numb1 + " = num1");
+		System.out.println(numb2 + " = num2");
 		/*
 		BigNumber numb3 = numb1.Add(numb2);
 		System.out.println("This is suma:\r\n" + numb3.GetString());
@@ -21,8 +21,8 @@ public class Main {
 		BigNumber numb6 = numb1.SquareMul();
 		System.out.println("This is SquareMul:\r\n" + numb6.GetString());
 		*/
-		BigNumber numb7 = numb1.LongPower(numb2);
-		System.out.println("This is LongPower:\r\n" + numb7.GetString());
+		//BigNumber numb7 = numb1.LongPower(numb2);
+		//System.out.println("This is LongPower:\r\n" + numb7.GetString());
 		//System.out.println("Bit:" + numb2.GetBit(4));
 		
 	/*
@@ -35,23 +35,23 @@ public class Main {
 		
 		BigNumber numb4 = numb1.Sub(numb2);
 		System.out.println("This is subtraction:\r\n" + numb4.GetString());
-	
+		*/ 
 		
 		BigNumber mu = numb2.BarretPreCompute();
 		System.out.println(mu + " = mu");
 		BigNumber numb8 = numb1.BarrettReduction(numb2, mu);
-		System.out.println(numb8 + " = Barret"); 
+		System.out.println(numb8 + " = num1 mod num2 (Barret)"); 
 		
 		//int k = numb1.BitLength();
 		//System.out.println("BitLength:" + k);
 		
-		BigNumber numb8 = numb1.Gsd(numb2);
-		System.out.println("Gsd:\r\n" + numb8.GetString());
-		numb8 = numb1.Lcm(numb2);
-		System.out.println("Lcm:\r\n" + numb8.GetString());
- */
-		BigNumber numb9 = numb1.LongModPowerBarrett(numb1, numb2) ;
-		System.out.println("PowerModBarrett:\r\n" + numb9.GetString());
+		BigNumber numb9 = numb1.Gsd(numb2);
+		System.out.println(numb9 + " = Gsd");
+		numb9 = numb1.Lcm(numb2);
+		System.out.println(numb9 + " = Lcm");
+ 
+		BigNumber numb10 = numb1.LongModPowerBarrett(numb1, numb2) ;
+		System.out.println(numb10 + " = PowerModBarrett");
 
 	}
 	
