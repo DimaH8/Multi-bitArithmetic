@@ -145,6 +145,10 @@ public class BigNumber {
 		}
 	}
 	
+	void ShiftLeft(int count) {
+		LongShiftDigitsToHigh(count);
+	}
+	
 	void LongShiftDigitsToHigh(int count) { 
 		 if (count == 0) {return;}
 		 if (count < 0) {
@@ -394,20 +398,26 @@ public class BigNumber {
 		while (((num1.GetBit(0) %2) == 0) && (num2.GetBit(0) %2) == 0) {
 			num1.ShiftRight(1);
 			num2.ShiftRight(1);
-			result.ShiftRight(1);
+			result.ShiftLeft(1);
 		}
-		while ((num1.GetBit(0) %2) == 0) {
-			num1.ShiftRight(1);
-		}
+
 		BigNumber nul = new BigNumber();
-		while (num2.Cmp(nul) != 0) {
+		while (num1.Cmp(nul) != 0) {
+			while ((num1.GetBit(0) %2) == 0) {
+				num1.ShiftRight(1);
+			}	
 			while ( (num2.GetBit(0) %2) == 0) {
 				num2.ShiftRight(1);	
 			}
-			num1 = num1.Min(num2);
-			num2 = num2.Abs(num2);
+			BigNumber t = num1.Abs(num2);
+			t.ShiftRight(1);
+			if (num1.Cmp(num2) != -1) { // x >= y
+				num1 = t;
+			} else {
+				num2 = t;
+			}
 		}
-		result = result.LongMul(num1);
+		result = result.LongMul(num2);
 		return result;
 	}
 	
