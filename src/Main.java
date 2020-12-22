@@ -22,8 +22,8 @@ public class Main {
 		System.out.println("This is SquareMul:\r\n" + numb6.GetString());
 		*/
 		
-		//BigNumber numb7 = numb1.LongPower(numb2);
-		//System.out.println(numb7 + " = LongPower");
+		BigNumber numb7 = numb1.LongPower(numb2);
+		System.out.println(numb7 + " = LongPower");
 		
 		
 //		Pair<BigNumber, BigNumber> pair = numb1.LongDivMod(numb2); 
@@ -45,8 +45,8 @@ public class Main {
 		//int k = numb1.BitLength();
 		//System.out.println("BitLength:" + k);
 		
-		BigNumber numb9 = numb1.Gsd(numb2);
-		System.out.println(numb9 + " = Gsd");
+		//BigNumber numb9 = numb1.Gsd(numb2);
+		//System.out.println(numb9 + " = Gsd");
 		//numb9 = numb1.Lcm(numb2);
 		//System.out.println(numb9 + " = Lcm");
  
@@ -54,7 +54,7 @@ public class Main {
 		BigNumber B = new BigNumber("40");
 		BigNumber N = new BigNumber("7543678fda");
 		BigNumber numb10 = A.LongModPowerBarrett(B, N) ;
-		System.out.println(numb10 + " = PowerModBarrett");
+		//System.out.println(numb10 + " = PowerModBarrett");
 	}
 	
 	

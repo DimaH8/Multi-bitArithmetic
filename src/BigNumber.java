@@ -400,7 +400,6 @@ public class BigNumber {
 			num2.ShiftRight(1);
 			result.ShiftLeft(1);
 		}
-
 		BigNumber nul = new BigNumber();
 		while (num1.Cmp(nul) != 0) {
 			while ((num1.GetBit(0) %2) == 0) {
@@ -447,6 +446,7 @@ public class BigNumber {
 		}
 		return result;
 	}
+	
 }
 
 
