@@ -67,9 +67,9 @@ public class BigNumber {
 	}
 	
 	BigNumber Add(BigNumber number) {
-		// this [BigNumber] -- ГЇГҐГ°ГёГЁГ© Г¤Г®Г¤Г Г­Г®ГЄ
-		// number [BigNumber] -- Г¤Г°ГіГЈГЁГ© Г¤Г®Г¤Г Г­Г®ГЄ
-		// result [BigNumber] -- ГЇГ®ГўГҐГ°ГІГ ВєГ¬Г® Г°ГҐГ§ГіГ«ГјГІГ ГІ Г¤Г®Г¤Г ГўГ Г­Г­Гї
+		// this [BigNumber] -- перший доданок
+		// number [BigNumber] -- другий доданок
+		// result [BigNumber] -- повертаємо результат додавання
 		BigNumber result = new BigNumber();
 		long carry = 0; 
 		for (int i = 0; i < array.length; i++) {
@@ -82,9 +82,9 @@ public class BigNumber {
 	}
 	
 	BigNumber Sub(BigNumber number) {
-		// this [BigNumber] -- ГЇГҐГ°ГёГЁГ© Г¤Г®Г¤Г Г­Г®ГЄ
-		// number [BigNumber] -- Г¤Г°ГіГЈГЁГ© Г¤Г®Г¤Г Г­Г®ГЄ
-		// result [BigNumber] -- ГЇГ®ГўГҐГ°ГІГ ВєГ¬Г® Г°ГҐГ§ГіГ«ГјГІГ ГІ Г¤Г®Г¤Г ГўГ Г­Г­Гї
+		// this [BigNumber] -- перший доданок
+		// number [BigNumber] -- другий доданок
+		// result [BigNumber] -- повертаємо результат додавання
 		BigNumber result = new BigNumber();
 		long borrow = 0; 
 		for (int i = 0; i < array.length; i++) {
@@ -364,8 +364,8 @@ public class BigNumber {
         int k_minus_1 = BitLength();
         int k = k_minus_1 + 1;
         if (k > 1023) {
-        	// Г®Г±ГЄВіГ«ГјГЄГЁ Г°ГҐГ Г«ВіГ§Г Г¶ВіГї Г«Г ГЎГ®Г°Г ГІГ®Г°Г­Г®Вї Г°Г®ГЎГ®ГІГЁ Г¬Г®Г¦ГҐ ГўГ¬ВіГ№Г ГІГЁ Г­ГҐ ГЎВіГ«ГјГёГҐ Г­ВіГ¦ 2048 ГЎВіГІ, Г  Г§Г ГЇГЁГ± B^2k 
-        	// Г§Г Г©Г¬Г Вє 2k+1 ГЎВіГІ, ГІГ®Г¬Гі Г¬Г ГЄГ±ГЁГ¬Г Г«ГјГ­ГҐ Г§Г­Г Г·ГҐГ­Г­Гї k Г¬Г®Г¦ГҐ ГЎГіГІГЁ 1023 ГЎВіГІГЁ.
+        	// оскільки реалізація лабораторної роботи може вміщати не більше ніж 2048 біт, а запис B^2k 
+        	// займає 2k+1 біт, тому максимальне значення k може бути 1023 біти.
         	throw new IllegalArgumentException("Error: lenght of k > 1023. k = " + k); 
         }
         int two_k = 2 * k;
@@ -388,8 +388,8 @@ public class BigNumber {
 		int k = (mod.BitLength() + 1);
 		//System.out.println(k + " = k");
 		if (k > 1023) { 
-			// Г®Г±ГЄВіГ«ГјГЄГЁ Г°ГҐГ Г«ВіГ§Г Г¶ВіГї Г«Г ГЎГ®Г°Г ГІГ®Г°Г­Г®Вї Г°Г®ГЎГ®ГІГЁ Г¬Г®Г¦ГҐ ГўГ¬ВіГ№Г ГІГЁ Г­ГҐ ГЎВіГ«ГјГёГҐ Г­ВіГ¦ 2048 ГЎВіГІ, Г  Г§Г ГЇГЁГ± B^2k 
-			// Г§Г Г©Г¬Г Вє 2k+1 ГЎВіГІ, ГІГ®Г¬Гі Г¬Г ГЄГ±ГЁГ¬Г Г«ГјГ­ГҐ Г§Г­Г Г·ГҐГ­Г­Гї k Г¬Г®Г¦ГҐ ГЎГіГІГЁ 1023 ГЎВіГІГЁ.
+			// оскільки реалізація лабораторної роботи може вміщати не більше ніж 2048 біт, а запис B^2k 
+			// займає 2k+1 біт, тому максимальне значення k може бути 1023 біти.
 			throw new IllegalArgumentException("Error: lenght of k > 1023. k = " + k); 
 		}
 		q.ShiftRight(k-1);
