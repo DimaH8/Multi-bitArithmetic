@@ -275,6 +275,45 @@ public class BigNumber {
 		Pair<BigNumber, BigNumber> pair = Pair.with(chastka, ostacha);
 		return pair;
 	}
+		
+	BigNumber Test10 (BigNumber number2, BigNumber number3) {
+		BigNumber result = new BigNumber();
+		result = this.Add(number2);
+		result = result.LongMul(number3);
+		return result;
+		
+	}
+	BigNumber Test11 (BigNumber number2, BigNumber number3) {
+		BigNumber result = new BigNumber();
+		result = this.Add(number2);
+		result = number3.LongMul(result);	
+		return result;
+		
+	}
+	BigNumber Test12 (BigNumber number2, BigNumber number3) {
+		BigNumber result = new BigNumber();
+		BigNumber temp = this.LongMul(number3);
+		BigNumber temp2 = number2.LongMul(number3);
+		result = temp.Add(temp2);	
+		return result;
+	}
+		
+	BigNumber Test20() {
+		BigNumber result = new BigNumber();
+		int n = 200;
+		result = this.LongMulOneDigit(n);
+		return result;
+	}
+	
+	BigNumber Test21() {
+		BigNumber result = new BigNumber();
+		int n = 200;
+		for (int i = 0; i < n; i++) {
+			result = result.Add(this);
+		}
+		return result;
+	}
+	
 		  //  LABA 2
 		
 	private void ShiftRight_UpTo32(int count) { 
@@ -447,6 +486,94 @@ public class BigNumber {
 		return result;
 	}
 	
+	BigNumber AddMod (BigNumber number, BigNumber mod, BigNumber mu) {
+		BigNumber result = new BigNumber();
+		BigNumber firstNum = this.BarrettReduction(mod, mu);
+		BigNumber secondNum = number.BarrettReduction(mod, mu);
+		result = firstNum.Add(secondNum);
+		result = result.BarrettReduction(mod, mu);
+		return result;
+	}
+	
+	BigNumber SubMod (BigNumber number, BigNumber mod, BigNumber mu) {
+		BigNumber result = new BigNumber();
+		BigNumber firstNum = this.BarrettReduction(mod, mu);
+		BigNumber secondNum = number.BarrettReduction(mod, mu);
+		result = firstNum.Sub(secondNum);
+		result = result.BarrettReduction(mod, mu);
+		return result;
+	}
+	
+	BigNumber MulMod (BigNumber number, BigNumber mod, BigNumber mu) {
+		BigNumber result = new BigNumber();
+		BigNumber firstNum = this.BarrettReduction(mod, mu);
+		BigNumber secondNum = number.BarrettReduction(mod, mu);
+		result = firstNum.LongMul(secondNum);
+		result = result.BarrettReduction(mod, mu);
+		return result;
+	}
+	
+	BigNumber SquareMulMod (BigNumber mod, BigNumber mu) {
+		BigNumber result = new BigNumber();
+		BigNumber firstNum = this.BarrettReduction(mod, mu);
+		result = firstNum.SquareMul() ;
+		result = result.BarrettReduction(mod, mu);
+		return result;
+	}
+	
+	BigNumber Test110 (BigNumber number2, BigNumber number3, BigNumber mod, BigNumber mu) {
+		BigNumber result = new BigNumber();
+		BigNumber firstNum = this.BarrettReduction(mod, mu);
+		BigNumber secondNum = number2.BarrettReduction(mod, mu);
+		BigNumber thirdNum = number3.BarrettReduction(mod, mu);
+		result = firstNum.AddMod(secondNum, mod, mu);
+		result = result.MulMod(thirdNum, mod, mu);
+		result = result.BarrettReduction(mod, mu);
+		return result;
+		
+	}
+	BigNumber Test111 (BigNumber number2, BigNumber number3, BigNumber mod, BigNumber mu) {
+		BigNumber result = new BigNumber();
+		BigNumber firstNum = this.BarrettReduction(mod, mu);
+		BigNumber secondNum = number2.BarrettReduction(mod, mu);
+		BigNumber thirdNum = number3.BarrettReduction(mod, mu);
+		result = firstNum.AddMod(secondNum, mod, mu);
+		result = thirdNum.MulMod(result, mod, mu);
+		result = result.BarrettReduction(mod, mu);
+		return result;
+		
+	}
+	BigNumber Test112 (BigNumber number2, BigNumber number3, BigNumber mod, BigNumber mu) {
+		BigNumber result = new BigNumber();
+		BigNumber firstNum = this.BarrettReduction(mod, mu);
+		BigNumber secondNum = number2.BarrettReduction(mod, mu);
+		BigNumber thirdNum = number3.BarrettReduction(mod, mu);
+		BigNumber temp = firstNum.MulMod(thirdNum, mod, mu);
+		BigNumber temp2 = secondNum.MulMod(thirdNum, mod, mu);
+		result = temp.AddMod(temp2, mod, mu);
+		result = result.BarrettReduction(mod, mu);
+		return result;
+	}
+		
+	BigNumber Test210(BigNumber mod, BigNumber mu) {
+		BigNumber result = new BigNumber();
+		BigNumber firstNum = this.BarrettReduction(mod, mu);
+		int n = 200;
+		result = firstNum.LongMulOneDigit(n);
+		result = result.BarrettReduction(mod, mu);
+		return result;
+	}
+	
+	BigNumber Test211(BigNumber mod, BigNumber mu) {
+		BigNumber result = new BigNumber();
+		BigNumber firstNum = this.BarrettReduction(mod, mu);
+		int n = 200;
+		for (int i = 0; i < n; i++) {
+			result = result.Add(firstNum);
+			result = result.BarrettReduction(mod, mu);
+		}
+		return result;
+	}
 }
 
 
