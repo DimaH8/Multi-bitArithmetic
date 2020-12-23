@@ -3,15 +3,15 @@ import org.javatuples.Pair;
 public class Main {
 
 	public static void main(String[] args) {	
-		BigNumber numb1 = new BigNumber("DAF1ABDA4AD4D9FE3E36A529210C2AE99B905922FC0519798A26E351FE23AF375AD6BA288EE030B70DF0CE1CDF1E8B75BA56494DC6ED36B181814CD5783E6C81");
-		BigNumber numb2 = new BigNumber("4D3C91C579C2C6216567A5241614B561ADDF76C4BB659E6FE7F65FF76A918C843F0458B3EF457BCD9022D78798A29462EC99C74E6674690267D3E9844251B39D");
-		BigNumber mod   = new BigNumber("2AB3786D3A85E62EC763A05A73A7F08D21EEE3CBCAE207E40854121BFF8258F7B2B293B0D30277CDB987A6FCB5BF28B68D8E68ABA88DED37BD80A879A1BB53E3");	
-//		BigNumber numb3 = new BigNumber("bcbAAFFFF6584A5768798A5763874A77479812AACC43475454bcbcbcbAAFFFF6584AF4FAE324454bcbcbc567798387412AF7438F75454bcbcbcbAAFFFF6584AF4cbcbAAFFFF6584A5768798A576879897FFF834947437989703A57");
+		BigNumber numb1 = new BigNumber("4D3C91C579C2C6216567A5241614B561ADDF76C4BB659E6FE7F65FF76A918C843F0458B3EF457BCD9022D78798A29462EC99C74E6674690267D3E9844251B3D");
+		BigNumber numb2 = new BigNumber("DAF1ABDA4AD4D9FE3E36A529210C2AE99B905922FC0519798A26E351FE23AF375AD6BA288EE030B70DF0CE1CDF1E8B75BA56494DC6ED36B181814CD5783E6C81");
+//		BigNumber mod   = new BigNumber("2AB3786D3A85E62EC763A05A73A7F08D21EEE3CBCAE207E40854121BFF8258F7B2B293B0D30277CDB987A6FCB5BF28B68D8E68ABA88DED37BD80A879A1BB53E3");	
+		BigNumber numb3 = new BigNumber("bcbAAFFFF6584A5768798A5763874A77479812AACC43475454bcbcbcbAAFFFF6584AF4FAE324454bcbcbc567798387412AF7438F75454bcbcbcbAAFFFF6584AF4cbcbAAFFFF6584A5768798A576879897FFF834947437989703A57");
 		
 		System.out.println(numb1 + " = num1");
 		System.out.println(numb2 + " = num2");
-//		System.out.println(numb3 + " = num3");
-		System.out.println(mod   + " =  mod");
+		System.out.println(numb3 + " = num3 \r\n");
+//		System.out.println(mod   + " =  mod \r\n");
 		/*
 		BigNumber numb3 = numb1.Add(numb2);
 		System.out.println("This is suma:\r\n" + numb3.GetString());
@@ -41,25 +41,25 @@ public class Main {
 		System.out.println("This is subtraction:\r\n" + numb4.GetString());	
 */
 		// Tests 1
-/*		
+		
 		BigNumber numb9 = numb1.Test10(numb2, numb3);
-		System.out.println(numb9 + " = Test10");
+		System.out.println(numb9 + " = (a + b)*c ");
 		
 		BigNumber numb10 = numb1.Test11(numb2, numb3);
-		System.out.println(numb10 + " = Test11");
+		System.out.println(numb10 + " = c*(a + b)");
 
 		BigNumber numb11 = numb1.Test12(numb2, numb3);
-		System.out.println(numb11 + " = Test12");
+		System.out.println(numb11 + " = a*c + b*c \r\n");
 		
 		BigNumber numb110 = numb1.Test20();
-		System.out.println(numb110 + " = Before equal");
+		System.out.println(numb110 + " = n*a");
 		
 		BigNumber numb111 = numb1.Test21();
-		System.out.println(numb111 + " = After equal");
-*/
+		System.out.println(numb111 + " = a + a + ... + a");
+
 		
 //		--------------LABA 2--------------
-		
+/*		
 		BigNumber numb12 = numb1.Gsd(numb2);
 		System.out.println(numb12 + " = Gsd");
 		numb12 = numb1.Lcm(numb2);
@@ -86,7 +86,7 @@ public class Main {
 		System.out.println(numb17 + " = PowerModBarrett");
 		
 	// Tests 2	
-/*
+
 		BigNumber numb18 = numb1.Test110(numb2, numb3, mod, mu);
 		System.out.println(numb18 + " = Test10");
 		
@@ -101,7 +101,7 @@ public class Main {
 		
 		BigNumber numb22 = numb1.Test211(mod, mu);
 		System.out.println(numb22 + " = After equal");
-*/
+
 		
 //		BigNumber A = new BigNumber("a34fd32a");
 //		BigNumber B = new BigNumber("40");
@@ -109,7 +109,7 @@ public class Main {
 //		BigNumber numb14 = A.LongModPowerBarrett(B, N) ;
 		//System.out.println(numb10 + " = PowerModBarrett");
 		
-		
+*/		
 	}
 	
 	
