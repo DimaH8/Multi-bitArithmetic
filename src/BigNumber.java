@@ -13,44 +13,42 @@ public class BigNumber {
 			array[i] = number.array[i];
 		}		
 	}
-
+	
 	void ReadNumber(String initNumber) {
-		int amountSymbols = initNumber.length();
-		
-		//System.out.println("It is init length: " + amountSymbols);
-		
-		while (amountSymbols %8 != 0 ) 
-		{ 
-			initNumber = 0 + initNumber;
-			amountSymbols = initNumber.length();
-		}
-		
-		//System.out.println("It is length of massive: " + amountSymbols);
-		
-		for (int i = 0; i < array.length && amountSymbols > 0; i ++) 
-		{
-			int end = amountSymbols;
-			int start = end - 8;
-			String subStroka = initNumber.substring(start, end);
-			amountSymbols = amountSymbols - 8;
-			array[i] = Long.parseUnsignedLong(subStroka, 16);
-		}
+			
+			int amountSymbols = initNumber.length();
+				
+			while (amountSymbols %8 != 0 ) 
+			{ 
+				initNumber = 0 + initNumber;
+				amountSymbols = initNumber.length();
+			}
+			
+			for (int i = 0; i < array.length && amountSymbols > 0; i ++) 
+			{
+				int end = amountSymbols;
+				int start = end - 8;
+				String subStroka = initNumber.substring(start, end);
+				amountSymbols = amountSymbols - 8;
+				array[i] = Long.parseUnsignedLong(subStroka, 16);
+			}
 	}
 	
 	String GetString() {
+		
 		SelfCheck();
 		String stroka = "";
-		
-		for (int i = array.length - 1; i >= 0 ; i--)
-		{
-			int cell = (int) array[i];
-			String substring = Integer.toHexString(cell);
-			while (substring.length() %8 != 0 ) 
-			{ 
-				substring = 0 + substring;
-			}	
-			stroka = stroka + substring;
-		}
+			
+			for (int i = array.length - 1; i >= 0 ; i--)
+			{
+				int cell = (int) array[i];
+				String substring = Integer.toHexString(cell);
+				while (substring.length() %8 != 0 ) 
+				{ 
+					substring = 0 + substring;
+				}	
+				stroka = stroka + substring;
+			}
 		return stroka;
 	}
 	
@@ -67,18 +65,19 @@ public class BigNumber {
 	}
 	
 	BigNumber Add(BigNumber number) {
+		
 		// this [BigNumber] -- перший доданок
 		// number [BigNumber] -- другий доданок
 		// result [BigNumber] -- повертаємо результат додавання
 		BigNumber result = new BigNumber();
-		long carry = 0; 
-		for (int i = 0; i < array.length; i++) {
-			long temp = this.array[i] + number.array[i] + carry;
-			result.array[i] = temp & ( (1L << 32) - 1);
-			carry = (temp >>> 32);
-		}
-
-		return result;
+		
+			long carry = 0; 
+			for (int i = 0; i < array.length; i++) {
+				long temp = this.array[i] + number.array[i] + carry;
+				result.array[i] = temp & ( (1L << 32) - 1);
+				carry = (temp >>> 32);
+			}
+			return result;
 	}
 	
 	BigNumber Sub(BigNumber number) {
@@ -86,34 +85,34 @@ public class BigNumber {
 		// number [BigNumber] -- другий доданок
 		// result [BigNumber] -- повертаємо результат додавання
 		BigNumber result = new BigNumber();
-		long borrow = 0; 
-		for (int i = 0; i < array.length; i++) {
-			long temp = this.array[i] - number.array[i] - borrow;
-			if (temp >= 0) {
-				result.array[i] = temp;
-				borrow = 0;
+			long borrow = 0; 
+			for (int i = 0; i < array.length; i++) {
+				long temp = this.array[i] - number.array[i] - borrow;
+				if (temp >= 0) {
+					result.array[i] = temp;
+					borrow = 0;
+				}
+				else {
+					result.array[i] = temp + (1L << 32);
+					borrow = 1;
+				}
 			}
-			else {
-				result.array[i] = temp + (1L << 32);
-				borrow = 1;
-			}
-		}
-		if (borrow == 1) { throw new IllegalArgumentException("Error: The second number is greater than the first"); }
+			if (borrow == 1) { throw new IllegalArgumentException("Error: The second number is greater than the first"); }
+			
 		return result;
 	}
 
 	int Cmp(BigNumber numberB) {
 
-		int i = array.length - 1;
-		while (i != -1 && this.array[i] == numberB.array[i]) {
-			i = i - 1;
-		}
-		if (i == -1) { return 0; }
-		else { 
-			if( this.array[i] > numberB.array[i] ) { return 1; }
-			else { return -1; }
-		}
-
+			int i = array.length - 1;
+			while (i != -1 && this.array[i] == numberB.array[i]) {
+				i = i - 1;
+			}
+			if (i == -1) { return 0; }
+			else { 
+				if( this.array[i] > numberB.array[i] ) { return 1; }
+				else { return -1; }
+			}
 	}
 	
 	BigNumber LongMulOneDigit( long b ) {
@@ -378,6 +377,7 @@ public class BigNumber {
 		
 	BigNumber BarrettReduction(BigNumber mod, BigNumber mu)	{
 		// this = x
+		
 		if ((this.BitLength() + 1) > 2*(mod.BitLength() +1)) {
 			System.out.println("Lenght x: " + (this.BitLength() + 1));
 			System.out.println("Lenght mod: " + (mod.BitLength() + 1));
@@ -411,10 +411,10 @@ public class BigNumber {
 		} 
 		result = r1.Sub(r2); 
 		//System.out.println(result + " = result");
-		int count = 0;
+		//int count = 0;
 		while (result.Cmp(mod) != -1) {
 			result = result.Sub(mod);
-			count++;
+		//	count++;
 		}
 		//System.out.println("BarretReduction: loop count " + count);
 		return result;
@@ -497,9 +497,10 @@ public class BigNumber {
 	
 	BigNumber SubMod (BigNumber number, BigNumber mod, BigNumber mu) {
 		BigNumber result = new BigNumber();
-		BigNumber firstNum = this.BarrettReduction(mod, mu);
-		BigNumber secondNum = number.BarrettReduction(mod, mu);
-		result = firstNum.Sub(secondNum);
+		//BigNumber firstNum = this.BarrettReduction(mod, mu);
+		//BigNumber secondNum = number.BarrettReduction(mod, mu);
+		//result = firstNum.Sub(secondNum);
+		result = this.Sub(number);
 		result = result.BarrettReduction(mod, mu);
 		return result;
 	}
@@ -574,6 +575,7 @@ public class BigNumber {
 		}
 		return result;
 	}
+	
 }
 
 
